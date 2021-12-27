@@ -3,7 +3,19 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
+type Mutation {
+  register(email: String!, firstName: String!, lastName: String!, password: String!): User!
+}
+
 type Query {
   """returns a greeting"""
   hello: String
+}
+
+type User {
+  firstName: String!
+  id: ID!
+  lastName: String!
+  name: String!
+  password: String!
 }

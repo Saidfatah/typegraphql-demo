@@ -1,23 +1,19 @@
 import { ApolloServer } from 'apollo-server-express';
 import * as express from 'express';
-import {buildSchema,Resolver,Query} from 'type-graphql'
+import {buildSchema} from 'type-graphql'
 import 'reflect-metadata'
+import {createConnection} from  'typeorm';
+import {RegisterResolver} from './models/user/register'
 
-@Resolver()
-class HelloResolver {
- 
-  @Query(() =>String,{nullable:true,description:"returns a greeting"} )
-  async hello() {
-    return "hello world";
-  }
- 
-}
+
 
 
 async function main() {
-  // building the schema 
+  try {
+    // building the schema 
+  await createConnection();//intialize db and create db connection
   const schema = await buildSchema({
-    resolvers: [HelloResolver],
+    resolvers: [RegisterResolver],
     // automatically create `schema.gql` file with schema definition in project's working directory
     emitSchemaFile: true,
   });
@@ -29,6 +25,9 @@ async function main() {
   app.listen(9080,()=>{
       console.log(`🚀 Server ready at http://localhost:9080`);
   })
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 
