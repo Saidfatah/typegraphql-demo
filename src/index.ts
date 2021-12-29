@@ -3,7 +3,7 @@ import {
   ApolloServerPluginLandingPageGraphQLPlayground
 } from "apollo-server-core";
 import  express from 'express';
-import {buildSchema} from 'type-graphql'
+import { buildSchema} from 'type-graphql'
 import 'reflect-metadata'
 import {createConnection} from  'typeorm';
 import {RegisterResolver} from './models/user/register'
@@ -14,12 +14,20 @@ import  connectRedis from 'connect-redis'
 import  cors from 'cors'
 import {redis} from './redis'
 
-
 declare module 'express-session' {
   export interface SessionData {
       userId: number;
+      userType: string;
   }
 }
+
+//this is one way of implmneting authorization
+// const customAuthChecker: AuthChecker<MyContext> = (
+//   { context  }
+// ) => {
+//   return !!context.req.session.userId
+// }
+
 async function main() {
   try {
     // building the schema 
@@ -28,6 +36,7 @@ async function main() {
     resolvers: [RegisterResolver,LoginResolver,MeResolver],
     // automatically create `schema.gql` file with schema definition in project's working directory
     emitSchemaFile: true,
+    // authChecker:customAuthChecker
   });
 
   const server = new ApolloServer({schema , context:({req}:any)=>({req}),plugins: [
