@@ -19,6 +19,7 @@ input RegisterInput {
   firstName: String!
   lastName: String!
   password: String!
+  type: String!
 }
 
 type User {
@@ -28,4 +29,5 @@ type User {
   lastName: String!
   name: String!
   password: String!
+  type: String!
 }

@@ -1,8 +1,14 @@
 import {
-    Length, IsEmail
+    Length, IsEmail,IsEnum
   } from 'class-validator';
 import { Field, InputType } from 'type-graphql';
 import { IsEmailAlreadyUsed } from './IsEmailAlreadyUsed';
+
+enum UserTypes {
+  member,
+  admin,
+  moderator
+} 
 
 @InputType()
 export class RegisterInput {
@@ -21,4 +27,8 @@ export class RegisterInput {
 
     @Field() 
     password:string;
+
+    @Field() 
+    @IsEnum(UserTypes)
+    type:string;
 }

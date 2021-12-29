@@ -4,6 +4,12 @@ import { User } from '../../entity/User';
 import { MyContext } from 'src/types/MyContext';
 
 
+declare module 'express-session' {
+  export interface SessionData {
+      userId: number;
+      userType: string;
+  }
+}
 
 @Resolver(User)
 export class LoginResolver {
@@ -22,6 +28,7 @@ export class LoginResolver {
       if(!valid) return null;
       
       context.req.session.userId=user.id
+      context.req.session.userType=user.type
    
 
       return user;
