@@ -32,6 +32,9 @@ export class User extends BaseEntity {
     @Column()
     type: string;
 
+    @Column("bool",{default:false})
+    confirmed: boolean;
+
     @Field()
     @Column("text",{unique:true})
     email: string;
