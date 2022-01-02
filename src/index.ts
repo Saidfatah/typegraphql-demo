@@ -61,7 +61,7 @@ async function main() {
   const app = express();
   app.use(cors({
     credentials:true,
-    origin:"https://studio.apollographql.com"
+    origin:"https://studio.apollographql.com",
   }))
 
 
