@@ -7,6 +7,7 @@ import { buildSchema} from 'type-graphql'
 import 'reflect-metadata'
 import {createConnection} from  'typeorm';
 import {RegisterResolver} from './models/user/register'
+import {logoutResolver} from './models/user/logout'
 import {forgotPasswordResolver} from './models/user/forgotPassword'
 import {ChangePasswordResolver} from './models/user/changePassword'
 import {confirmUserResolver} from './models/user/confirmUser'
@@ -43,14 +44,15 @@ async function main() {
       MeResolver,
       confirmUserResolver,
       forgotPasswordResolver,
-      ChangePasswordResolver
+      ChangePasswordResolver,
+      logoutResolver
     ],
     // automatically create `schema.gql` file with schema definition in project's working directory
     emitSchemaFile: true,
     // authChecker:customAuthChecker
   });
 
-  const server = new ApolloServer({schema , context:({req}:any)=>({req}),plugins: [
+  const server = new ApolloServer({schema , context:({req,res}:any)=>({req,res}),plugins: [
     ApolloServerPluginLandingPageGraphQLPlayground(),
   ], });
   await server.start();

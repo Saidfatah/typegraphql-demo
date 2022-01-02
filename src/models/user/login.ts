@@ -19,8 +19,10 @@ export class LoginResolver {
     @Arg('password') password:string,
     @Ctx() context:MyContext,
   ):Promise<User | null> {
-      const user=await User.findOne({where:{email}})
-
+      try {
+        console.log({email,password})
+        const user=await User.findOne({where:{email}})
+       console.log(user)
       if(!user) return null;
 
       const valid = await bcrypt.compare(password,user.password);
@@ -33,6 +35,10 @@ export class LoginResolver {
       context.req.session.userType=user.type
    
 
-      return user;
+        return user;
+      } catch (error) {
+        console.log(error)
+        return null
+      }
   }
 }
