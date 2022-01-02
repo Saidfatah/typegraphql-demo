@@ -1,6 +1,7 @@
 import {
     Length, IsEmail,IsEnum
   } from 'class-validator';
+import { PasswordInput } from '../../../shared/passwordInput';
 import { Field, InputType } from 'type-graphql';
 import { IsEmailAlreadyUsed } from './IsEmailAlreadyUsed';
 
@@ -11,7 +12,7 @@ enum UserTypes {
 } 
 
 @InputType()
-export class RegisterInput {
+export class RegisterInput extends PasswordInput {
     @Field() 
     @Length(1,30)
     firstName:string;
@@ -24,9 +25,6 @@ export class RegisterInput {
     @IsEmail()
     @IsEmailAlreadyUsed({message:"email is already in use"})
     email:string;
-
-    @Field() 
-    password:string;
 
     @Field() 
     @IsEnum(UserTypes)

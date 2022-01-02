@@ -3,8 +3,15 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
+input changePasswordInput {
+  password: String!
+  token: String!
+}
+
 type Mutation {
+  changePassword(data: changePasswordInput!): User
   confirmUser(token: String!): Boolean!
+  forgotPassword(email: String!): Boolean!
   login(email: String!, password: String!): User
   register(input: RegisterInput!): User!
 }
