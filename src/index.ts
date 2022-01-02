@@ -7,6 +7,8 @@ import { buildSchema} from 'type-graphql'
 import 'reflect-metadata'
 import {createConnection} from  'typeorm';
 import {RegisterResolver} from './models/user/register'
+import {forgotPasswordResolver} from './models/user/forgotPassword'
+import {ChangePasswordResolver} from './models/user/changePassword'
 import {confirmUserResolver} from './models/user/confirmUser'
 import {MeResolver} from './models/user/me'
 import {LoginResolver} from './models/user/login'
@@ -35,7 +37,14 @@ async function main() {
     // building the schema 
   await createConnection();//intialize db and create db connection
   const schema = await buildSchema({
-    resolvers: [RegisterResolver,LoginResolver,MeResolver,confirmUserResolver],
+    resolvers: [
+      RegisterResolver,
+      LoginResolver,
+      MeResolver,
+      confirmUserResolver,
+      forgotPasswordResolver,
+      ChangePasswordResolver
+    ],
     // automatically create `schema.gql` file with schema definition in project's working directory
     emitSchemaFile: true,
     // authChecker:customAuthChecker
