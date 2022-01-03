@@ -6,7 +6,6 @@ import { User } from '../../../entity/User';
 export class IsEmailAlreadyUsedConstraint implements ValidatorConstraintInterface{
      async validate(email: string) {
          const user = await User.findOne({where:{email}})
-         console.log(user)
          if(user) return false;
          return true;
      }
