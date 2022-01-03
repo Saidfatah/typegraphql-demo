@@ -1,6 +1,6 @@
 import { createConnection } from "typeorm"
 
-export const testConnection = (drop:boolean=false)=>{
+export const testConnection = (drop:boolean=true)=>{
     return createConnection(
         {
             name:"default",

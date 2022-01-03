@@ -38,5 +38,5 @@ type User {
   lastName: String!
   name: String!
   password: String!
-  type: String!
+  type: String
 }

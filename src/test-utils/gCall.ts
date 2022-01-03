@@ -10,13 +10,15 @@ import {MeResolver} from '../models/user/me'
 
 interface Options{
     source:string;
-    variableValues:Maybe<{
+    variableValues?:Maybe<{
         [key: string]: any;
-    }>
+    }>;
+    userId?:number;
+    userType?:string;
 }
 
 let schema:GraphQLSchema
-export const gCall=async ({source,variableValues}:Options)=>{
+export const gCall=async ({source,variableValues,userId,userType}:Options)=>{
     if(!schema)
     schema = await buildSchema({
         resolvers: [
@@ -32,10 +34,17 @@ export const gCall=async ({source,variableValues}:Options)=>{
         emitSchemaFile: true,
         // authChecker:customAuthChecker
       });
-
     return graphql({
         schema,
         source,
-        variableValues
+        variableValues,
+        contextValue:{
+            req:{
+               session:{userId,userType}
+            },
+            res:{
+               clearCookier:jest.fn()
+            }
+        }
     })
 }

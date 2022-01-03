@@ -1,4 +1,6 @@
-import {Resolver ,Ctx, Query, UseMiddleware} from 'type-graphql'
+import {Resolver ,Ctx, Query, 
+  UseMiddleware
+} from 'type-graphql'
 import { User } from '../../entity/User';
 import { MyContext } from 'src/types/MyContext';
 import {isAuth} from '../middlewear/IsAuth'

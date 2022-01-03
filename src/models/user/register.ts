@@ -25,10 +25,10 @@ export class RegisterResolver {
   async register(
     @Arg('input') {email,firstName,lastName,password,type}:RegisterInput,
   ):Promise<User> {
-    console.log('resolver called')
+    console.log('register user resolver call')
       const hasshedPass = await bcrypt.hash(password,12);
       const user=await User.create({firstName,lastName,email,password:hasshedPass,type}).save()
-      sendEmail(user.email,await createConfirmationUrl(user.id))
+      await sendEmail(user.email,await createConfirmationUrl(user.id))
       return user;
   }
 }
